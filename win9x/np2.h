@@ -30,8 +30,6 @@ typedef struct {
 	int		winy;
 	UINT	paddingx;
 	UINT	paddingy;
-	UINT	fscrn_cx;
-	UINT	fscrn_cy;
 	UINT8	force400;
 	UINT8	WINSNAP;
 	UINT8	NOWAIT;
@@ -78,7 +76,6 @@ typedef struct {
 	UINT8	thickframe;
 	UINT8	xrollkey;
 	UINT8	fscrnbpp;
-	UINT8	fscrnmod;
 } NP2OSCFG;
 
 

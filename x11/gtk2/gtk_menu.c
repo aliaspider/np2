@@ -1,4 +1,4 @@
-/*	$Id: gtk_menu.c,v 1.6 2007/01/02 16:43:48 monaka Exp $	*/
+/*	$Id: gtk_menu.c,v 1.4 2005/03/05 15:01:03 monaka Exp $	*/
 
 /*
  * Copyright (c) 2004 NONAKA Kimihiro (aw9k-nnk@asahi-net.or.jp)
@@ -1064,7 +1064,7 @@ cb_newdisk(GtkAction *action, gpointer user_data)
 		for (i = 0; i < NELEMENTS(filter); i++) {
 			if (f == filter[i]) {
 				kind = i;
-				tmp = g_strjoin(".", path, extname[i], NULL);
+				tmp = g_strjoin(".", path, extname[i]);
 				if (tmp) {
 					g_free(path);
 					path = tmp;
@@ -1691,8 +1691,6 @@ cb_radio(GtkRadioAction *action, GtkRadioAction *current, gpointer user_data)
 /*
  * create menubar
  */
-static GtkWidget *menubar;
-
 static void
 equip_fddrive(GtkUIManager *ui_manager, guint no)
 {
@@ -1726,6 +1724,7 @@ equip_fddrive(GtkUIManager *ui_manager, guint no)
 GtkWidget *
 create_menu(void)
 {
+	GtkWidget *menubar;
 	GError *err = NULL;
 	gint rv;
 	guint i;
@@ -1794,26 +1793,4 @@ create_menu(void)
 
 	menubar = gtk_ui_manager_get_widget(menu_hdl.ui_manager, "/MainMenu");
 	return menubar;
-}
-
-void
-xmenu_hide(void)
-{
-
-	gtk_widget_hide(menubar);
-}
-
-void
-xmenu_show(void)
-{
-
-	gtk_widget_show(menubar);
-}
-
-void
-xmenu_select_screen(UINT8 mode)
-{
-
-	xmenu_select_rotate(mode & SCRNMODE_ROTATEMASK);
-	xmenu_select_screenmode(mode & SCRNMODE_FULLSCREEN);
 }

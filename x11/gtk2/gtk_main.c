@@ -1,4 +1,4 @@
-/*	$Id: gtk_main.c,v 1.4 2007/01/02 16:43:48 monaka Exp $	*/
+/*	$Id: gtk_main.c,v 1.2 2005/03/12 12:36:57 monaka Exp $	*/
 
 /*
  * Copyright (c) 2004 NONAKA Kimihiro <aw9k-nnk@asahi-net.or.jp>
@@ -118,9 +118,7 @@ key_press_evhandler(GtkWidget *w, GdkEventKey *ev, gpointer p)
 	UNUSED(w);
 	UNUSED(p);
 
-	if (ev->keyval == GDK_F11)
-		xmenu_select_screen(scrnmode ^ SCRNMODE_FULLSCREEN);
-	else if ((ev->keyval == GDK_F12) && (np2oscfg.F12KEY == 0))
+	if ((ev->keyval == GDK_F12) && (np2oscfg.F12KEY == 0))
 		xmenu_toggle_item(NULL, "mousemode", !np2oscfg.MOUSE_SW);
 	else
 		gtkkbd_keydown(ev->keyval);
@@ -192,23 +190,6 @@ button_release_evhandler(GtkWidget *w, GdkEventButton *ev, gpointer p)
 	case 3:
 		mouse_btn(MOUSE_RIGHTUP);
 		break;
-	}
-	return TRUE;
-}
-
-/*
- - Signal: gboolean GtkWidget::window_state_event (GtkWidget *widget,
-          GdkEventWindowState *event, gpointer user_data)
-*/
-static gboolean
-window_state_evhandler(GtkWidget *w, GdkEventWindowState *ev, gpointer p)
-{
-
-	UNUSED(w);
-	UNUSED(p);
-
-	if (ev->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
-		/* Nothing to do. */
 	}
 	return TRUE;
 }
@@ -336,8 +317,6 @@ gui_gtk_widget_create(void)
 	    GTK_SIGNAL_FUNC(button_press_evhandler), NULL);
 	g_signal_connect(GTK_OBJECT(main_window), "button_release_event",
 	    GTK_SIGNAL_FUNC(button_release_evhandler), NULL);
-	g_signal_connect(GTK_OBJECT(main_window), "window_state_event",
-	    GTK_SIGNAL_FUNC(window_state_evhandler), NULL);
 
 	g_signal_connect(GTK_OBJECT(drawarea), "configure_event",
 	    GTK_SIGNAL_FUNC(configure_evhandler), NULL);
@@ -362,6 +341,7 @@ gui_gtk_widget_show(void)
 void
 gui_gtk_widget_mainloop(void)
 {
+
 
 	install_idle_process();
 	gtk_main();
